@@ -4,23 +4,25 @@ import Image from "next/image";
 
 interface NavbarProps {
   onContactClick: () => void;
-  onProductsClick: () => void; // This fixes the 'Property does not exist' error
+  onProductsClick: () => void; // Fixed: Now matches the prop used in app/page.tsx
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onContactClick, onProductsClick }) => {
   return (
     <nav className="fixed top-0 w-full z-[150] h-24 px-6 md:px-12 flex items-center justify-between backdrop-blur-xl border-b border-white/5 bg-black/40">
+      {/* LOGO SECTION */}
       <div 
         className="flex items-center gap-4 cursor-pointer group"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       >
         <div className="relative w-12 h-12">
-          {/* We are using the logo you uploaded */}
+          {/* Ensure your file in 'public' folder is named exactly logo.png */}
           <Image 
             src="/logo.png" 
             alt="HYMA Logo" 
             fill 
-            className="object-contain"
+            priority
+            className="object-contain transition-transform duration-500 group-hover:scale-110"
           />
         </div>
         <div className="flex flex-col">
@@ -29,6 +31,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick, onProductsClick }) => {
         </div>
       </div>
 
+      {/* NAVIGATION LINKS */}
       <div className="flex items-center gap-8">
         <button 
           onClick={onProductsClick} 
@@ -36,6 +39,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick, onProductsClick }) => {
         >
           Products
         </button>
+        
         <button 
           onClick={onContactClick} 
           className="bg-white text-black px-6 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all shadow-lg shadow-white/5"
